@@ -1,0 +1,54 @@
+esphome:
+  name: tank-sensor
+  friendly_name: Tank Sensor
+
+esp32:
+  board: seeed_xiao_esp32s3
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  - platform: esphome
+    encryption:
+      key: !secret api_key
+
+wifi:
+  # No static credentials: provisioned via Improv (BLE/USB) on first boot
+  ap:
+    ssid: "Tank-Sensor Fallback"
+    password: !secret ap_password
+
+captive_portal:
+
+# WiFi provisioning over BLE (web.esphome.io) and USB serial
+esp32_improv:
+  authorizer: none
+
+improv_serial:
+
+web_server:
+  port: 80
+
+# XKC-Y25NPN sensors are active-low (NPN open-collector output)
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO2
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    id: water
+    name: "Water"
+    device_class: occupancy
+    filters:
+      - delayed_on: 100ms
+      - delayed_off: 500ms

@@ -1,0 +1,10 @@
+[project]
+name = "esp32-tank-sensor"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "cadquery>=2.8.0",
+    "esphome>=2026.9.0",
+    "matplotlib>=3.11.2",
+    "trimesh>=5.1.0",
+]

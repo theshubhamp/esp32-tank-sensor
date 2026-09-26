@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+*.pyc
+/case_body.stl
+/case_lid.stl
